@@ -1,4 +1,4 @@
-from scsskutils import *
+# from scsskutils import *
 
 import pandas as pd
 import numpy as np
@@ -15,6 +15,9 @@ import gc
 import requests
 import gzip
 
+
+data_location = '/kaggle/input/PLAsTiCC-2018'
+pickle_location = '/kaggle/working'
 
 
 def csv_to_pickle(mainfilename,metadatafilename):
@@ -391,14 +394,11 @@ if __name__ == "__main__":
     n1="training_set"
     n2="training_set_metadata"
     csv_to_pickle(n1,n2)
-
-if __name__ == "__main__":
     for i in range(1,12):
         n1=f"test_set_batch{i}"
         n2="unblinded_test_set_metadata"
         if not os.path.isfile(os.path.join(data_location,f"{n2}.csv")):
-            unblindedchoice=query_yes_no("Preprocessing Test Data will require the true labels. This will require a 157 MB download. Do you want to proceed?")
-            if unblindedchoice:
-                create_unblinded_set()
+            create_unblinded_set()
         assert os.path.isfile(os.path.join(data_location,f"{n2}.csv"))
         csv_to_pickle(n1,n2)
+    
